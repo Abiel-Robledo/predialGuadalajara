@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer, Theme, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,6 +11,10 @@ import DropdownAlert from 'react-native-dropdownalert';
 
 import { RootStackParamList } from './src/types/navigation';
 import DropdownalertContext from './src/context/Dropdownalert';
+
+// Screens
+import SearchScreen from './src/screens/Search';
+import { AlertNotification } from './src/types/alert';
 
 // Configuration
 const theme: Theme = {
@@ -17,11 +26,7 @@ const theme: Theme = {
     border: '#ECECEC',
     text: '#000000',
   },
-}
-
-// Screens
-import SearchScreen from './src/screens/Search';
-import { AlertNotification } from './src/types/alert';
+};
 
 // Initialize the stack navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -44,13 +49,15 @@ const AppContainer = () => {
     }
   }, [notification]);
 
+  const dropdownAlertContextValue = useMemo(() => ({
+    setNotification,
+    notification,
+  }), [notification]);
+
   return (
     <>
       <DropdownalertContext.Provider
-        value={{
-          setNotification,
-          notification,
-        }}
+        value={dropdownAlertContextValue}
       >
         <NavigationContainer
           theme={theme}

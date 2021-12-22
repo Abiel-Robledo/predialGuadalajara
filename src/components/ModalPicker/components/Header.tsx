@@ -53,6 +53,10 @@ const Header: React.FC<HeaderProps> = ({
   );
 };
 
+Header.defaultProps = {
+  disabled: false,
+};
+
 const Container = styled.View`
   width: 100%;
 `;
