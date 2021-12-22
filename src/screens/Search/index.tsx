@@ -15,6 +15,7 @@ import Title from './components/Title';
 
 import ModalPicker from '../../components/ModalPicker';
 import { useDropdownAlert } from '../../utils/notifications';
+import { consultaAdedudo } from '../../services/apipagoenlinea';
 
 const RECAUDADORAS: number[] = [1, 2, 3];
 const TIPOS: string[] = ['U', 'R'];
@@ -34,24 +35,37 @@ const SearchScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   // Hooks
-  const { notify } = useDropdownAlert();
+  const { notify, errorHandler } = useDropdownAlert();
 
   // Methods
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!recaudadora || !tipo || !cuenta) {
       notify({
-        type: 'error',
-        title: 'Error',
+        type: 'warn',
+        title: 'Alerta',
         message: 'Debe completar todos los campos',
       });
     }
 
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      console.log('Submit');
-    }, 1000);
+    const response = await consultaAdedudo(
+      recaudadora,
+      tipo,
+      cuenta,
+      correo,
+      errorHandler,
+    );
+
+    if (response) {
+      notify({
+        type: 'success',
+        title: 'Éxito',
+        message: 'Consulta exitosa',
+      });
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -116,6 +130,7 @@ const SearchScreen: React.FC = () => {
 
             <FormItem>
               <Input
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 ref={cuentaRef}
                 placeholder="Cuenta *"
@@ -129,6 +144,7 @@ const SearchScreen: React.FC = () => {
 
             <FormItem>
               <Input
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 ref={correoRef}
                 placeholder="Correo Electrónico (Opcional)"
@@ -177,13 +193,13 @@ const SearchScreen: React.FC = () => {
         onClose={() => setShowRecaudadoraPicker(false)}
         isVisible={showRecaudadoraPicker}
         value={recaudadora}
-        onSelect={(value) => {
+        onSelect={(value: string) => {
           setRecaudadora(value);
           setShowRecaudadoraPicker(false);
         }}
-        options={RECAUDADORAS.map((recaudadora) => ({
-          label: `Recaudadora ${recaudadora}`,
-          value: recaudadora,
+        options={RECAUDADORAS.map((r) => ({
+          label: `Recaudadora ${r}`,
+          value: r,
         }))}
       />
 
@@ -192,13 +208,13 @@ const SearchScreen: React.FC = () => {
         onClose={() => setShowTipoPicker(false)}
         isVisible={showTipoPicker}
         value={tipo}
-        onSelect={(value) => {
+        onSelect={(value: string) => {
           setTipo(value);
           setShowTipoPicker(false);
         }}
-        options={TIPOS.map((tipo) => ({
-          label: tipo,
-          value: tipo,
+        options={TIPOS.map((t) => ({
+          label: t,
+          value: t,
         }))}
       />
     </>

@@ -2,23 +2,21 @@ import React from 'react';
 import styled from 'styled-components/native';
 import fonts from '../../../utils/fonts';
 
-const Title: React.FC = () => {
-  return (
-    <Container>
-      <Text>
-        Consulta y pago
-      </Text>
+const Title: React.FC = () => (
+  <Container>
+    <Text>
+      Consulta y pago
+    </Text>
 
-      <Text>
-        del
-      </Text>
+    <Text>
+      del
+    </Text>
 
-      <Text>
-        impuesto predial
-      </Text>
-    </Container>
-  );
-};
+    <Text>
+      impuesto predial
+    </Text>
+  </Container>
+);
 
 const Container = styled.View`
   padding-vertical: 30px;
