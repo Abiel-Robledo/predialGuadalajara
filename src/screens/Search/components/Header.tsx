@@ -5,9 +5,15 @@ import styled from 'styled-components/native';
 import Logo from '../../../components/icons/Logo';
 import fonts from '../../../utils/fonts';
 
+interface HeaderProps {
+  title?: string;
+}
+
 const LOGO_WIDTH = 67;
 
-const Header: React.FC = () => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+}) => {
   // Hooks
   const insets = useSafeAreaInsets();
 
@@ -24,13 +30,27 @@ const Header: React.FC = () => {
         />
       </LogoContainer>
 
-      <InnerContainer>
-        <Text>
-          some
-        </Text>
-      </InnerContainer>
+      {
+        Boolean(title) && (
+          <InnerContainer
+            style={{
+              paddingTop: insets.top + 8,
+              paddingLeft: 8,
+              paddingRight: 8,
+            }}
+          >
+            <Text>
+              { title }
+            </Text>
+          </InnerContainer>
+        )
+      }
     </Container>
   );
+};
+
+Header.defaultProps = {
+  title: '',
 };
 
 const Container = styled.View`
@@ -46,7 +66,9 @@ const LogoContainer = styled.View`
 `;
 
 const Text = styled.Text`
-  font-family: ${fonts.regular};
+  font-family: ${fonts.bold};
+  font-size: 16px;
+  color: #ffffff;
 `;
 
 export default Header;
