@@ -193,8 +193,8 @@ const SearchScreen: React.FC = () => {
         onClose={() => setShowRecaudadoraPicker(false)}
         isVisible={showRecaudadoraPicker}
         value={recaudadora}
-        onSelect={(value: string) => {
-          setRecaudadora(value);
+        onSelect={(value) => {
+          setRecaudadora(value as string);
           setShowRecaudadoraPicker(false);
         }}
         options={RECAUDADORAS.map((r) => ({
@@ -208,8 +208,8 @@ const SearchScreen: React.FC = () => {
         onClose={() => setShowTipoPicker(false)}
         isVisible={showTipoPicker}
         value={tipo}
-        onSelect={(value: string) => {
-          setTipo(value);
+        onSelect={(value) => {
+          setTipo(value as string);
           setShowTipoPicker(false);
         }}
         options={TIPOS.map((t) => ({
