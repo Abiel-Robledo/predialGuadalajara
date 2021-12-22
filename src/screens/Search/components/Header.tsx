@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
 import Logo from '../../../components/icons/Logo';
+import fonts from '../../../utils/fonts';
 
 const LOGO_WIDTH = 67;
 
@@ -45,6 +46,7 @@ const LogoContainer = styled.View`
 `;
 
 const Text = styled.Text`
+  font-family: ${fonts.regular};
 `;
 
 export default Header;

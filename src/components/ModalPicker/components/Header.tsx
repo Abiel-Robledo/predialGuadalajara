@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import fonts from '../../../utils/fonts';
 
 interface HeaderProps {
   onClose: () => void;
@@ -78,7 +79,7 @@ const TitleContainer = styled.View`
 
 const Title = styled.Text`
   font-size: 20px;
-  font-weight: bold;
+  font-family: ${fonts.bold};
 `;
 
 export default Header;
