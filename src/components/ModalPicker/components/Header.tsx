@@ -84,6 +84,7 @@ const TitleContainer = styled.View`
 const Title = styled.Text`
   font-size: 20px;
   font-family: ${fonts.bold};
+  color: #000000;
 `;
 
 export default Header;
