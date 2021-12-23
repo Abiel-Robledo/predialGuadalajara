@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:clean": "cd android; ./gradlew clean",
+    "android:build": "cd android; ./gradlew assembleRelease",
+    "android:bundle": "cd android; ./gradlew bundleRelease",
+    "android:install": "adb install ./android/app/build/outputs/apk/release/app-release.apk",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
