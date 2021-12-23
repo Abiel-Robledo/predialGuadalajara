@@ -1,11 +1,14 @@
 import { useContext } from 'react';
 
 import PredioContext from '../context/Predio';
+import { PredioProps } from '../types/api';
 
-const usePredio = () => {
-  const predioContext = useContext(PredioContext);
+type PredioSetter = (pred: PredioProps | null) => void;
 
-  return [predioContext.predio, predioContext.setPredio];
+const usePredio = (): [(PredioProps | null), PredioSetter] => {
+  const { predio, setPredio } = useContext(PredioContext);
+
+  return [predio, setPredio];
 };
 
 export { usePredio };

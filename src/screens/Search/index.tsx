@@ -1,21 +1,30 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   TextInput,
   TouchableWithoutFeedback,
-  ActivityIndicator,
 } from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import colors from '../../utils/colors';
 import fonts from '../../utils/fonts';
-import Header from './components/Header';
+import Header from '../../components/Header';
 import Title from './components/Title';
+import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 
 import ModalPicker from '../../components/ModalPicker';
 import { useDropdownAlert } from '../../utils/notifications';
+import { usePredio } from '../../utils/predio';
 import { consultaAdedudo } from '../../services/apipagoenlinea';
+import { RootStackParamList } from '../../types/navigation';
+
+import ELLIPSE from '../../../assets/images/Ellipse.png';
+
+type SearchScreenNavigatioProp = NativeStackNavigationProp<RootStackParamList, 'search'>;
 
 const RECAUDADORAS: number[] = [1, 2, 3];
 const TIPOS: string[] = ['U', 'R'];
@@ -35,7 +44,14 @@ const SearchScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   // Hooks
+  const [_predio, setPredio] = usePredio();
   const { notify, errorHandler } = useDropdownAlert();
+  const navigation = useNavigation<SearchScreenNavigatioProp>();
+
+  useEffect(() => {
+    setPredio(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Methods
   const onSubmit = async () => {
@@ -58,11 +74,15 @@ const SearchScreen: React.FC = () => {
     );
 
     if (response) {
+      setPredio(response);
+
       notify({
         type: 'success',
         title: 'Éxito',
         message: 'Consulta exitosa',
       });
+
+      navigation.push('home');
     }
 
     setLoading(false);
@@ -78,6 +98,7 @@ const SearchScreen: React.FC = () => {
         keyboardShouldPersistTaps="always"
       >
         <Container>
+          <BackgroundDecoration />
 
           <Header />
 
@@ -160,34 +181,14 @@ const SearchScreen: React.FC = () => {
 
             <Button
               onPress={onSubmit}
-              disabled={loading}
+              loading={loading}
             >
-              {
-                loading ? (
-                  <ActivityIndicator
-                    size="small"
-                    color="#FFFFFF"
-                  />
-                ) : (
-                  <ButtonText>
-                    Consultar Adeudo Predial
-                  </ButtonText>
-                )
-              }
+              Consultar Adeudo Predial
             </Button>
-
           </Padder>
 
           <Padder>
-            <Footer>
-              <FooterPrimaryText>
-                Dudas y/o problemas para realizar el pago por internet del impuesto Predial.
-              </FooterPrimaryText>
-
-              <FooterSecondaryText>
-                33-3837-2600 ext. 2613, 2457 y 2466, pagos.electronicos@guadalajara.gob.mx
-              </FooterSecondaryText>
-            </Footer>
+            <Footer />
           </Padder>
         </Container>
       </KeyboardAwareScrollView>
@@ -230,6 +231,14 @@ const Container = styled.View`
   background-color: ${colors.bgColor};
 `;
 
+const BackgroundDecoration = styled.Image.attrs({
+  source: ELLIPSE,
+})`
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
 const Padder = styled.View`
   padding-horizontal: 20px;
 `;
@@ -259,45 +268,6 @@ const Input = styled.TextInput.attrs({
   color: #ffffff;
   font-size: 16px;
   font-family: ${fonts.medium};
-`;
-
-const Button = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.8,
-})`
-  height: 50px;
-  border-radius: 25px;
-  background-color: #FF254B;
-  flex-direction: row;
-  margin-top: 32px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ButtonText = styled.Text`
-  color: #ffffff;
-  font-size: 18px;
-  font-family: ${fonts.medium};
-`;
-
-const Footer = styled.View`
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.12);
-  margin-top: 40px;
-  border-radius: 10px;
-`;
-
-const FooterPrimaryText = styled.Text`
-  margin-bottom: 10px;
-  text-align: center;
-  color: #ffffff;
-  font-family: ${fonts.regular};
-`;
-
-const FooterSecondaryText = styled.Text`
-  margin-bottom: 10px;
-  text-align: center;
-  color: #FF254B;
-  font-family: ${fonts.regular};
 `;
 
 export default SearchScreen;

@@ -11,12 +11,13 @@ import DropdownAlert from 'react-native-dropdownalert';
 
 import { RootStackParamList } from './src/types/navigation';
 import DropdownalertContext from './src/context/Dropdownalert';
-
-// Screens
-import SearchScreen from './src/screens/Search';
 import { AlertNotification } from './src/types/alert';
 import { PredioProps } from './src/types/api';
 import PredioContext from './src/context/Predio';
+
+// Screens
+import SearchScreen from './src/screens/Search';
+import HomeScreen from './src/screens/Home';
 
 // Configuration
 const theme: Theme = {
@@ -79,6 +80,7 @@ const AppContainer = () => {
               }}
             >
               <Stack.Screen name="search" component={SearchScreen} />
+              <Stack.Screen name="home" component={HomeScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </PredioContext.Provider>

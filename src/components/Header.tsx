@@ -1,18 +1,23 @@
 import React from 'react';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
-import Logo from '../../../components/icons/Logo';
-import fonts from '../../../utils/fonts';
+import Logo from './icons/Logo';
+import fonts from '../utils/fonts';
 
 interface HeaderProps {
   title?: string;
+  titleContainerStyle?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
-const LOGO_WIDTH = 67;
+export const LOGO_WIDTH = 67;
 
 const Header: React.FC<HeaderProps> = ({
   title,
+  titleContainerStyle,
+  titleStyle,
 }) => {
   // Hooks
   const insets = useSafeAreaInsets();
@@ -33,13 +38,18 @@ const Header: React.FC<HeaderProps> = ({
       {
         Boolean(title) && (
           <InnerContainer
-            style={{
-              paddingTop: insets.top + 8,
-              paddingLeft: 8,
-              paddingRight: 8,
-            }}
+            style={[
+              titleContainerStyle,
+              {
+                paddingTop: insets.top + 8,
+                paddingLeft: 8,
+                paddingRight: 8,
+              },
+            ]}
           >
-            <Text>
+            <Text
+              style={titleStyle}
+            >
               { title }
             </Text>
           </InnerContainer>
@@ -51,6 +61,8 @@ const Header: React.FC<HeaderProps> = ({
 
 Header.defaultProps = {
   title: '',
+  titleContainerStyle: {},
+  titleStyle: {},
 };
 
 const Container = styled.View`
@@ -58,7 +70,9 @@ const Container = styled.View`
   padding-horizontal: 20px;
 `;
 
-const InnerContainer = styled.View``;
+const InnerContainer = styled.View`
+  flex: 1;
+`;
 
 const LogoContainer = styled.View`
   background-color: #FF254B;
@@ -67,7 +81,7 @@ const LogoContainer = styled.View`
 
 const Text = styled.Text`
   font-family: ${fonts.bold};
-  font-size: 16px;
+  font-size: 18px;
   color: #ffffff;
 `;
 

@@ -42,11 +42,18 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        args: 'after-used',
+        varsIgnorePattern: '^_.+$',
+      },
+    ],
     'no-unused-vars': [
       'error',
       {
         args: 'after-used',
-        varsIgnorePattern: '^_+$',
+        varsIgnorePattern: '^_.+$',
       },
     ],
     'no-void': ['error', { allowAsStatement: true }],
