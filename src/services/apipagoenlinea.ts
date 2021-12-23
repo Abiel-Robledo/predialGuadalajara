@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { CommonResponse, ApiError } from '../types/api';
+import { ApiError, ConsultaAdedudoResponse, PredioProps } from '../types/api';
 
-const BASE_URL = 'https://apipagoenlinea.guadalajara.gob.mx/predialApi';
+const BASE_URL = 'https://apipagoenlinea.guadalajara.gob.mx/predialApiTest';
 
 const consultaAdedudo = async (
   recaudadora: string,
@@ -9,7 +9,7 @@ const consultaAdedudo = async (
   cuenta: string,
   correo?: string,
   onError?: (error: ApiError) => void,
-) => {
+): Promise<PredioProps | null> => {
   try {
     const body = new URLSearchParams();
     body.append('recaudadora', recaudadora);
@@ -17,7 +17,7 @@ const consultaAdedudo = async (
     body.append('cuenta', cuenta);
     body.append('correo', correo || '');
 
-    const response = await axios.post<CommonResponse>(
+    const response = await axios.post<ConsultaAdedudoResponse>(
       `${BASE_URL}/consulta_adeudo`,
       body,
       {
@@ -27,7 +27,7 @@ const consultaAdedudo = async (
       },
     );
 
-    if (response.data.status) {
+    if (response.data.status && response.data.data) {
       return response.data.data;
     }
 

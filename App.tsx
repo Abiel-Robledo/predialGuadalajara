@@ -15,6 +15,8 @@ import DropdownalertContext from './src/context/Dropdownalert';
 // Screens
 import SearchScreen from './src/screens/Search';
 import { AlertNotification } from './src/types/alert';
+import { PredioProps } from './src/types/api';
+import PredioContext from './src/context/Predio';
 
 // Configuration
 const theme: Theme = {
@@ -37,6 +39,7 @@ const AppContainer = () => {
 
   // States
   const [notification, setNotification] = useState<AlertNotification | null>(null);
+  const [predio, setPredio] = useState<PredioProps | null>(null);
 
   // Effects
   useEffect(() => {
@@ -54,22 +57,31 @@ const AppContainer = () => {
     notification,
   }), [notification]);
 
+  const predioContextValue = useMemo(() => ({
+    setPredio,
+    predio,
+  }), [predio]);
+
   return (
     <>
       <DropdownalertContext.Provider
         value={dropdownAlertContextValue}
       >
-        <NavigationContainer
-          theme={theme}
+        <PredioContext.Provider
+          value={predioContextValue}
         >
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
+          <NavigationContainer
+            theme={theme}
           >
-            <Stack.Screen name="search" component={SearchScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="search" component={SearchScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PredioContext.Provider>
       </DropdownalertContext.Provider>
 
       <DropdownAlert

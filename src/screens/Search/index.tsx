@@ -75,6 +75,7 @@ const SearchScreen: React.FC = () => {
           flexGrow: 1,
         }}
         bounces={false}
+        keyboardShouldPersistTaps="always"
       >
         <Container>
 
@@ -139,6 +140,7 @@ const SearchScreen: React.FC = () => {
                 blurOnSubmit={false}
                 onSubmitEditing={() => correoRef.current?.focus()}
                 editable={!loading}
+                keyboardType="numeric"
               />
             </FormItem>
 
@@ -151,6 +153,8 @@ const SearchScreen: React.FC = () => {
                 value={correo}
                 onChangeText={(text) => setCorreo(text)}
                 editable={!loading}
+                keyboardType="email-address"
+                onSubmitEditing={onSubmit}
               />
             </FormItem>
 
