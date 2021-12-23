@@ -18,12 +18,23 @@ import Button from '../components/Button';
 import fonts from '../utils/fonts';
 import Footer from '../components/Footer';
 import { RootStackParamList } from '../types/navigation';
+import { useDropdownAlert } from '../utils/notifications';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
 
 const HomeScreen = () => {
   // Hooks
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { notify } = useDropdownAlert();
+
+  // Methods
+  const notSupportedYet = () => {
+    notify({
+      type: 'info',
+      title: '¡No implementado!',
+      message: 'Esta función aún no está disponible.',
+    });
+  };
 
   return (
     <View style={styles.background}>
@@ -43,7 +54,9 @@ const HomeScreen = () => {
 
         <View style={styles.content}>
           <View style={styles.menu}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('details')}
+            >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>Verificar Datos</Text>
 
@@ -55,7 +68,9 @@ const HomeScreen = () => {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={notSupportedYet}
+            >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>Consulta de adeudos</Text>
 
@@ -67,7 +82,9 @@ const HomeScreen = () => {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={notSupportedYet}
+            >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>
                   Aceptación del adeudo o
@@ -84,7 +101,10 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
 
             <Button
-              onPress={() => navigation.navigate('search')}
+              onPress={() => navigation.reset({
+                index: 0,
+                routes: [{ name: 'search' }],
+              })}
             >
               Consultar otra cuenta
             </Button>
