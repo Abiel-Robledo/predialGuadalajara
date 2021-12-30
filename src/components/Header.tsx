@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
 import Logo from './icons/Logo';
 import fonts from '../utils/fonts';
+import IMAGENLOGO from '../../assets/images/logo2.png';
+
 
 interface HeaderProps {
   title?: string;
@@ -30,9 +32,13 @@ const Header: React.FC<HeaderProps> = ({
           paddingBottom: 8,
         }}
       >
-        <Logo
-          size={LOGO_WIDTH}
-        />
+        <Image source={IMAGENLOGO} style={{
+          height: 123,
+          width: 123,
+          marginTop: -12,
+          marginEnd: 0,
+
+        }} />
       </LogoContainer>
 
       {
@@ -50,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
             <Text
               style={titleStyle}
             >
-              { title }
+              {title}
             </Text>
           </InnerContainer>
         )
@@ -67,7 +73,7 @@ Header.defaultProps = {
 
 const Container = styled.View`
   flex-direction: row;
-  padding-horizontal: 20px;
+  padding-horizontal: 5px;
 `;
 
 const InnerContainer = styled.View`
@@ -75,8 +81,6 @@ const InnerContainer = styled.View`
 `;
 
 const LogoContainer = styled.View`
-  background-color: #FF254B;
-  padding-horizontal: 18px;
 `;
 
 const Text = styled.Text`

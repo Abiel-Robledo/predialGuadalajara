@@ -18,7 +18,9 @@ import PredioContext from './src/context/Predio';
 // Screens
 import SearchScreen from './src/screens/Search';
 import HomeScreen from './src/screens/Home';
+import PagoHome from './src/screens/Pago';
 import DetailsScreen from './src/screens/Details';
+import ImprimirPagoScreen from './src/screens/ImprimirPago';
 
 // Configuration
 const theme: Theme = {
@@ -82,6 +84,8 @@ const AppContainer = () => {
             >
               <Stack.Screen name="search" component={SearchScreen} />
               <Stack.Screen name="home" component={HomeScreen} />
+              <Stack.Screen name="pago" component={PagoHome} />
+              <Stack.Screen name="imprimirPago" component={ImprimirPagoScreen} />
               <Stack.Screen name="details" component={DetailsScreen} />
             </Stack.Navigator>
           </NavigationContainer>

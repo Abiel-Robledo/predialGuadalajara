@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   ScrollView,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +20,8 @@ import fonts from '../utils/fonts';
 import Footer from '../components/Footer';
 import { RootStackParamList } from '../types/navigation';
 import { useDropdownAlert } from '../utils/notifications';
+import { usePredio } from '../utils/predio';
+
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
 
@@ -26,6 +29,7 @@ const HomeScreen = () => {
   // Hooks
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const { notify } = useDropdownAlert();
+  const [predio] = usePredio();
 
   // Methods
   const notSupportedYet = () => {
@@ -34,6 +38,15 @@ const HomeScreen = () => {
       title: '¡No implementado!',
       message: 'Esta función aún no está disponible.',
     });
+  };
+
+  const openImprimirPago = () => {
+    Linking.openURL(predio?.url_orden_pago);
+  };
+
+  const openPagoConTarjeta = () => {
+    // Linking.openURL("https://u.mitec.com.mx/p/i/5Z4BF060");
+    Linking.openURL(predio?.mit.url_movil_app);
   };
 
   return (
@@ -83,13 +96,27 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback
-              onPress={notSupportedYet}
+              onPress={() => (navigation.navigate('imprimirPago'))}
             >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>
-                  Aceptación del adeudo o
-                  {'\n'}
-                  impresión de la orden de pago
+                  Imprimir Orden de Pago
+                 </Text>
+
+                <Icon
+                  name="ios-caret-forward-outline"
+                  size={20}
+                  color="#fff"
+                />
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              onPress={() => (navigation.navigate('pago'))}
+            >
+              <View style={styles.menuItemPago}>
+                <Text style={styles.txtItem}>
+                  Pagar ${predio?.ecommerce?.amount}
                 </Text>
 
                 <Icon
@@ -111,10 +138,11 @@ const HomeScreen = () => {
 
             <Footer />
 
+
           </View>
         </View>
       </ScrollView>
-    </View>
+    </View >
   );
 };
 
@@ -133,7 +161,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    paddingTop: 48,
+    paddingTop: 8,
   },
   menu: {
     paddingHorizontal: 20,
@@ -141,6 +169,17 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    minHeight: 57,
+    width: '100%',
+    borderRadius: 15,
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 17,
+    marginTop: 16,
+  },
+  menuItemPago: {
+    flexDirection: 'row',
+    backgroundColor: '#17BC46',
     minHeight: 57,
     width: '100%',
     borderRadius: 15,

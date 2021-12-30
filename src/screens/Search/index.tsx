@@ -50,7 +50,7 @@ const SearchScreen: React.FC = () => {
 
   useEffect(() => {
     setPredio(null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Methods
@@ -100,9 +100,12 @@ const SearchScreen: React.FC = () => {
         <Container>
           <BackgroundDecoration />
 
-          <Header />
-
-          <Title />
+          <Header
+            title={'Consulta y pago\ndel\nimpuesto predial'}
+            titleStyle={{
+              textAlign: 'center',
+            }}
+          />
 
           <Padder>
 
