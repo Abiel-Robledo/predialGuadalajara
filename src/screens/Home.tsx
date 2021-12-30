@@ -96,7 +96,7 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback
-              onPress={() => (navigation.navigate('imprimirPago'))}
+              onPress={openImprimirPago}
             >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>
@@ -112,7 +112,7 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback
-              onPress={() => (navigation.navigate('pago'))}
+              onPress={openPagoConTarjeta}
             >
               <View style={styles.menuItemPago}>
                 <Text style={styles.txtItem}>

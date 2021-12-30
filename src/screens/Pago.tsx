@@ -38,10 +38,7 @@ const Pago = () => {
 
       <Image style={styles.elipse} source={IMAGEBACKGROUND} />
       <Header
-        onPress={() => navigation.reset({
-          index: 0,
-          routes: [{ name: 'search' }],
-        })}
+        onPress={() => navigation.goBack()}
       />
       <WebView
         source={{ uri: predio?.mit?.url_movil_app }}
