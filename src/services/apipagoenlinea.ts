@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ApiError, ConsultaAdedudoResponse, PredioProps } from '../types/api';
 
 const BASE_URL = 'https://apipagoenlinea.guadalajara.gob.mx/predialApiTest/';
+const BASE_URL_PROD = 'https://apipagoenlinea.guadalajara.gob.mx/predialApi/';
 
 const consultaAdedudo = async (
   recaudadora: string,
@@ -18,7 +19,7 @@ const consultaAdedudo = async (
     body.append('correo', correo || '');
 
     const response = await axios.post<ConsultaAdedudoResponse>(
-      `${BASE_URL}consulta_adeudo_app`,
+      `${BASE_URL_PROD}consulta_adeudo_app`,
       body,
       {
         headers: {

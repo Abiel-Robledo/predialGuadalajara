@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import styled from 'styled-components/native';
 import fonts from '../../../utils/fonts';
+import colors from '../../../utils/colors';
 
 interface ListItemProps {
   fieldName: string;
@@ -14,19 +15,19 @@ const ListItem: React.FC<ListItemProps> = ({
   value,
   style,
 }) => (
-  <Container
-    style={style}
-  >
-    <PropName>
-      { fieldName }
-      { ': ' }
-    </PropName>
+    <Container
+      style={style}
+    >
+      <PropName>
+        {fieldName}
+        {': '}
+      </PropName>
 
-    <Value>
-      { value }
-    </Value>
-  </Container>
-);
+      <Value>
+        {value}
+      </Value>
+    </Container>
+  );
 
 ListItem.defaultProps = {
   style: {},
@@ -39,7 +40,7 @@ const Container = styled.View`
   padding-horizontal: 20px;
   padding-vertical: 15px;
   flex-direction: row;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
 `;
 
 const PropName = styled.Text`

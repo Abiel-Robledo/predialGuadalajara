@@ -8,6 +8,8 @@ import {
 import styled from 'styled-components/native';
 
 import fonts from '../utils/fonts';
+import colors from '../utils/colors';
+
 
 interface ButtonProps {
   children?: React.ReactNode | string;
@@ -26,41 +28,41 @@ const Button: React.FC<ButtonProps> = ({
   style,
   loading,
 }) => (
-  <BaseButton
-    disabled={disabled || loading}
-    onPress={onPress}
-    style={style}
-  >
-    {
-      loading && (
-        <ActivityIndicator
-          size="small"
-          color="#fff"
-        />
-      )
-    }
+    <BaseButton
+      disabled={disabled || loading}
+      onPress={onPress}
+      style={style}
+    >
+      {
+        loading && (
+          <ActivityIndicator
+            size="small"
+            color="#fff"
+          />
+        )
+      }
 
-    {
-      !loading && typeof children === 'string' && (
-        <ButtonText
-          style={textStyle}
-        >
-          { children }
-        </ButtonText>
-      )
-    }
+      {
+        !loading && typeof children === 'string' && (
+          <ButtonText
+            style={textStyle}
+          >
+            {children}
+          </ButtonText>
+        )
+      }
 
-    {
-      !loading && typeof children !== 'string' ? children : null
-    }
-  </BaseButton>
-);
+      {
+        !loading && typeof children !== 'string' ? children : null
+      }
+    </BaseButton>
+  );
 
 Button.defaultProps = {
   disabled: false,
   style: {},
   textStyle: {},
-  onPress: () => {},
+  onPress: () => { },
   children: null,
   loading: false,
 };
@@ -70,7 +72,7 @@ const BaseButton = styled.TouchableOpacity.attrs({
 })`
   height: 50px;
   border-radius: 25px;
-  background-color: #FF254B;
+  background-color: ${colors.button};
   flex-direction: row;
   margin-top: 32px;
   justify-content: center;

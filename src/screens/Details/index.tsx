@@ -13,6 +13,7 @@ import Header from './components/Header';
 import { PredioProps } from '../../types/api';
 import { numberFormat } from '../../utils/numbers';
 import { RootStackParamList } from '../../types/navigation';
+import colors from '../../utils/colors';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'details'>;
 
@@ -88,7 +89,6 @@ const DetailsScreen: React.FC = () => {
 
   return (
     <Container>
-      <BackgroundDecoration />
 
       <Header
         onPress={() => navigation.goBack()}
@@ -116,7 +116,7 @@ const DetailsScreen: React.FC = () => {
           fieldName="Cuenta"
           value={predio?.Cuenta}
           style={{
-            backgroundColor: '#F1002D',
+            backgroundColor: colors.button,
             marginTop: 30,
           }}
         />
@@ -130,17 +130,17 @@ const DetailsScreen: React.FC = () => {
             },
             index,
           ) => (
-            <ListItem
-              key={propertie}
-              fieldName={fieldName}
-              value={render(predio?.[propertie]) as string}
-              style={{
-                marginTop: 2,
-                flex: index === PROPERTIES.length - 1 ? 1 : 0,
-                paddingBottom: index === PROPERTIES.length - 1 ? 10 + insets.bottom : 10,
-              }}
-            />
-          ))
+              <ListItem
+                key={propertie}
+                fieldName={fieldName}
+                value={render(predio?.[propertie]) as string}
+                style={{
+                  marginTop: 2,
+                  flex: index === PROPERTIES.length - 1 ? 1 : 0,
+                  paddingBottom: index === PROPERTIES.length - 1 ? 10 + insets.bottom : 10,
+                }}
+              />
+            ))
         }
       </ScrollView>
     </Container>
@@ -149,7 +149,7 @@ const DetailsScreen: React.FC = () => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: #1A1A1A;
+  background-color: ${colors.primary};
 `;
 
 const BackgroundDecoration = styled.Image.attrs({

@@ -19,7 +19,7 @@ const Title: React.FC = () => (
 );
 
 const Container = styled.View`
-  padding-vertical: 30px;
+  padding-vertical: 10px;
   justify-content: center;
   align-items: center;
 `;

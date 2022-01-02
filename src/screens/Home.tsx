@@ -18,9 +18,14 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import fonts from '../utils/fonts';
 import Footer from '../components/Footer';
+import Title from '../screens/Search/components/Title';
+
 import { RootStackParamList } from '../types/navigation';
 import { useDropdownAlert } from '../utils/notifications';
 import { usePredio } from '../utils/predio';
+import { numberFormat } from '../utils/numbers';
+import colors from '../utils/colors';
+
 
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'home'>;
@@ -49,6 +54,14 @@ const HomeScreen = () => {
     Linking.openURL(predio?.mit.url_movil_app);
   };
 
+  const PROPERTIES: Prop[] = [
+    {
+      fieldName: 'Valor Construcción',
+      propertie: 'amount',
+      render: (val) => numberFormat(val as string),
+    },
+  ];
+
   return (
     <View style={styles.background}>
 
@@ -56,14 +69,8 @@ const HomeScreen = () => {
         contentContainerStyle={styles.container}
         bounces={false}
       >
-        <Image style={styles.elipse} source={IMAGEBACKGROUND} />
 
-        <Header
-          title={'Consulta y pago\ndel\nimpuesto predial'}
-          titleStyle={{
-            textAlign: 'center',
-          }}
-        />
+        <Title />
 
         <View style={styles.content}>
           <View style={styles.menu}>
@@ -76,7 +83,7 @@ const HomeScreen = () => {
                 <Icon
                   name="ios-caret-forward-outline"
                   size={20}
-                  color="#fff"
+                  color={colors.secundary}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -90,7 +97,7 @@ const HomeScreen = () => {
                 <Icon
                   name="ios-caret-forward-outline"
                   size={20}
-                  color="#fff"
+                  color={colors.secundary}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -106,26 +113,39 @@ const HomeScreen = () => {
                 <Icon
                   name="ios-caret-forward-outline"
                   size={20}
-                  color="#fff"
+                  color={colors.secundary}
                 />
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback
-              onPress={() => (navigation.navigate('pago'))}
-            >
-              <View style={styles.menuItemPago}>
-                <Text style={styles.txtItem}>
-                  Pagar ${predio?.ecommerce?.amount}
-                </Text>
+            {
+              PROPERTIES.map((
 
-                <Icon
-                  name="ios-caret-forward-outline"
-                  size={20}
-                  color="#fff"
-                />
-              </View>
-            </TouchableWithoutFeedback>
+                {
+                  fieldName,
+                  propertie,
+                  render = (val) => val || '$0.00',
+                },
+                index,
+              ) => (
+                  <TouchableWithoutFeedback
+                    onPress={() => (navigation.navigate('pago'))}
+                  >
+                    <View style={styles.menuItem}>
+                      <Text style={styles.menuItemPago}>
+                        Pagar {render(predio?.ecommerce?.amount || "0") as string}
+                      </Text>
+
+                      <Icon
+                        name="ios-caret-forward-outline"
+                        size={20}
+                        color={colors.secundary}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+
+                ))
+            }
 
             <Button
               onPress={() => navigation.reset({
@@ -138,6 +158,13 @@ const HomeScreen = () => {
 
             <Footer />
 
+            <Header
+              title={'Consulta y pago\ndel\nimpuesto predial'}
+              titleStyle={{
+                textAlign: 'center',
+              }}
+            />
+
 
           </View>
         </View>
@@ -149,7 +176,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.primary,
   },
   container: {
     flexGrow: 1,
@@ -168,30 +195,25 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: colors.text,
     minHeight: 57,
     width: '100%',
-    borderRadius: 15,
+    borderRadius: 100,
     alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 17,
     marginTop: 16,
   },
   menuItemPago: {
-    flexDirection: 'row',
-    backgroundColor: '#17BC46',
-    minHeight: 57,
-    width: '100%',
-    borderRadius: 15,
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 17,
-    marginTop: 16,
+    fontSize: 18,
+    fontFamily: fonts.extraBold,
+    color: '#17BC46',
+    flex: 1,
   },
   txtItem: {
     fontSize: 18,
     fontFamily: fonts.extraBold,
-    color: '#ffffff',
+    color: colors.secundary,
     flex: 1,
   },
   title: {

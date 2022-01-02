@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 import Logo from './icons/Logo';
 import fonts from '../utils/fonts';
-import IMAGENLOGO from '../../assets/images/logo2.png';
+import IMAGENLOGO from '../../assets/images/logo-05.png';
 
 
 interface HeaderProps {
@@ -33,34 +33,13 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         <Image source={IMAGENLOGO} style={{
-          height: 123,
-          width: 123,
-          marginTop: -12,
+          width: 100,
+          height: 50,
+          resizeMode: 'center',
+          marginTop: 0,
           marginEnd: 0,
-
         }} />
       </LogoContainer>
-
-      {
-        Boolean(title) && (
-          <InnerContainer
-            style={[
-              titleContainerStyle,
-              {
-                paddingTop: insets.top + 8,
-                paddingLeft: 8,
-                paddingRight: 8,
-              },
-            ]}
-          >
-            <Text
-              style={titleStyle}
-            >
-              {title}
-            </Text>
-          </InnerContainer>
-        )
-      }
     </Container>
   );
 };
@@ -74,6 +53,8 @@ Header.defaultProps = {
 const Container = styled.View`
   flex-direction: row;
   padding-horizontal: 5px;
+  justify-content: center;
+  padding: 10px;
 `;
 
 const InnerContainer = styled.View`

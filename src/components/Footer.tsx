@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import fonts from '../utils/fonts';
+import colors from '../utils/colors';
 
 const Footer: React.FC = () => (
   <Container>
@@ -17,7 +18,7 @@ const Footer: React.FC = () => (
 
 const Container = styled.View`
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(204, 52, 97, 0.5);
   margin-top: 40px;
   border-radius: 10px;
 `;
@@ -32,7 +33,7 @@ const PrimaryText = styled.Text`
 const SecondaryText = styled.Text`
   margin-bottom: 10px;
   text-align: center;
-  color: #FF254B;
+  color: ${colors.text};
   font-family: ${fonts.regular};
 `;
 

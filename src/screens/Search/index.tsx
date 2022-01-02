@@ -26,7 +26,7 @@ import ELLIPSE from '../../../assets/images/Ellipse.png';
 
 type SearchScreenNavigatioProp = NativeStackNavigationProp<RootStackParamList, 'search'>;
 
-const RECAUDADORAS: number[] = [1, 2, 3];
+const RECAUDADORAS: number[] = [1, 2, 3, 4];
 const TIPOS: string[] = ['U', 'R'];
 
 const SearchScreen: React.FC = () => {
@@ -56,6 +56,7 @@ const SearchScreen: React.FC = () => {
   // Methods
   const onSubmit = async () => {
     if (!recaudadora || !tipo || !cuenta) {
+
       notify({
         type: 'warn',
         title: 'Alerta',
@@ -73,19 +74,26 @@ const SearchScreen: React.FC = () => {
       errorHandler,
     );
 
-    if (response) {
+    if (response && response.Estatus === "0") {
       setPredio(response);
 
       notify({
         type: 'success',
         title: 'Éxito',
-        message: 'Consulta exitosa',
+        message: 'Consulta exitosa.',
       });
 
       navigation.push('home');
-    }
+    } else if (response && response.Estatus !== "0") {
 
-    setLoading(false);
+      notify({
+        type: 'info',
+        title: 'Sin adeudos',
+        message: response.EstatusMensaje,
+      })
+
+      setLoading(false);
+    }
   };
 
   return (
@@ -98,14 +106,14 @@ const SearchScreen: React.FC = () => {
         keyboardShouldPersistTaps="always"
       >
         <Container>
-          <BackgroundDecoration />
-
           <Header
             title={'Consulta y pago\ndel\nimpuesto predial'}
             titleStyle={{
               textAlign: 'center',
             }}
           />
+
+          <Title />
 
           <Padder>
 
@@ -123,7 +131,7 @@ const SearchScreen: React.FC = () => {
                 <Icon
                   name="ios-caret-down-outline"
                   size={24}
-                  color="#FFFFFF"
+                  color={colors.secundary}
                   style={{
                     marginRight: 20,
                   }}
@@ -145,7 +153,7 @@ const SearchScreen: React.FC = () => {
                 <Icon
                   name="ios-caret-down-outline"
                   size={24}
-                  color="#FFFFFF"
+                  color={colors.secundary}
                   style={{
                     marginRight: 20,
                   }}
@@ -231,7 +239,7 @@ const SearchScreen: React.FC = () => {
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${colors.bgColor};
+  background-color: ${colors.primary};
 `;
 
 const BackgroundDecoration = styled.Image.attrs({
@@ -249,14 +257,14 @@ const Padder = styled.View`
 const FormItem = styled.View`
   height: 50px;
   border-radius: 25px;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: ${colors.text};
   flex-direction: row;
   margin-top: 32px;
   align-items: center;
 `;
 
 const InputText = styled.Text`
-  color: #ffffff;
+  color: ${colors.secundary};
   font-size: 16px;
   font-family: ${fonts.medium};
   flex: 1;
@@ -264,11 +272,11 @@ const InputText = styled.Text`
 `;
 
 const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#fff',
+  placeholderTextColor: colors.secundary,
 })`
   flex: 1;
   padding-horizontal: 20px;
-  color: #ffffff;
+  color: ${colors.secundary};
   font-size: 16px;
   font-family: ${fonts.medium};
 `;
