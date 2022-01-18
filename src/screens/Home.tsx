@@ -89,7 +89,7 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback
-              onPress={notSupportedYet}
+              onPress={() => (navigation.navigate('detalleDePago'))}
             >
               <View style={styles.menuItem}>
                 <Text style={styles.txtItem}>Consulta de adeudos</Text>

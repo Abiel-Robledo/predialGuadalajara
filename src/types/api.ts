@@ -92,4 +92,5 @@ export type {
   ReferenciaEcommerce,
   PredioProps,
   ConsultaAdedudoResponse,
+  AdeudoProps,
 };

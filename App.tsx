@@ -17,6 +17,7 @@ import PredioContext from './src/context/Predio';
 
 // Screens
 import SearchScreen from './src/screens/Search';
+import DetalleDePago from './src/screens/DetallesDePago';
 import HomeScreen from './src/screens/Home';
 import PagoHome from './src/screens/Pago';
 import DetailsScreen from './src/screens/Details';
@@ -86,6 +87,7 @@ const AppContainer = () => {
               <Stack.Screen name="home" component={HomeScreen} />
               <Stack.Screen name="pago" component={PagoHome} />
               <Stack.Screen name="imprimirPago" component={ImprimirPagoScreen} />
+              <Stack.Screen name="detalleDePago" component={DetalleDePago} />
               <Stack.Screen name="details" component={DetailsScreen} />
             </Stack.Navigator>
           </NavigationContainer>
