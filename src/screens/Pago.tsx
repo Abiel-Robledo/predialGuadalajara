@@ -36,17 +36,20 @@ const Pago = () => {
     <View style={styles.Background}>
       {console.log(predio?.mit?.url_movil_app)}
 
-      <Image style={styles.elipse} source={IMAGEBACKGROUND} />
       <Header
         onPress={() => navigation.reset({
           index: 0,
           routes: [{ name: 'search' }],
         })}
       />
-      <WebView
-        source={{ uri: predio?.mit?.url_movil_app }}
-        style={{ flex: 1 }}
-      />
+      {predio?.mit?.url_movil_app === undefined || (
+        <WebView
+          source={{ uri: predio?.mit?.url_movil_app }}
+          style={{ flex: 1 }}
+        />
+      )}
+
+
     </View>
   )
 }
@@ -57,11 +60,6 @@ const styles = StyleSheet.create({
   Background: {
     flex: 1,
     backgroundColor: '#1A1A1A',
-  },
-  elipse: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
   },
   menuItem: {
     flexDirection: 'row',

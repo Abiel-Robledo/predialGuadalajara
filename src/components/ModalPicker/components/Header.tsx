@@ -32,11 +32,7 @@ const Header: React.FC<HeaderProps> = ({
           disabled={disabled}
         >
           <IconContainer>
-            <Icon
-              name="ios-close"
-              size={30}
-              color="#000000"
-            />
+
           </IconContainer>
         </TouchableWithoutFeedback>
 
@@ -44,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({
           <Title
             numberOfLines={1}
           >
-            { title }
+            {title}
           </Title>
         </TitleContainer>
 

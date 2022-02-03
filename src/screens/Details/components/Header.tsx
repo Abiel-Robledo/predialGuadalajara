@@ -3,6 +3,8 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import colors from '../../../utils/colors';
 
 interface HeaderProps {
   onPress: () => void;
@@ -43,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({
 
 const Container = styled.View`
   width: 100%;
-  background-color: #FF254B;
+  background-color: ${colors.primary};
 `;
 
 const InnerContainer = styled.View`

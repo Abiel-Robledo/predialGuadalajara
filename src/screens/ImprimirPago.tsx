@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   StyleSheet,
-  Text,
   View,
   TouchableWithoutFeedback,
   Image,
@@ -11,12 +10,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { WebView } from 'react-native-webview';
+import styled from 'styled-components/native';
+
 
 import fonts from '../utils/fonts';
 import IMAGEBACKGROUND from '../../assets/images/Ellipse.png';
 import { RootStackParamList } from '../types/navigation';
 import Header from './Details/components/Header';
 import { usePredio } from '../utils/predio';
+import colors from '../utils/colors';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'imprimirPago'>;
 
@@ -33,21 +35,30 @@ const Pago = () => {
   };
 
   return (
-    <View style={styles.Background}>
-      {console.log(predio?.mit?.url_movil_app)}
-
-      <Image style={styles.elipse} source={IMAGEBACKGROUND} />
+    <>
       <Header
         onPress={() => navigation.reset({
           index: 0,
           routes: [{ name: 'search' }],
         })}
       />
-      <WebView
-        source={{ uri: predio?.url_orden_pago }}
-        style={{ flex: 1 }}
-      />
-    </View>
+      <View style={styles.Background}>
+        {console.log(predio?.url_orden_pago)}
+        <Text>
+          Descargando la órden de pago
+       </Text>
+
+        <Text2>
+          espere un momento...
+       </Text2>
+        <View>
+          <WebView
+            source={{ uri: predio?.url_orden_pago }}
+            style={{}}
+          />
+        </View>
+      </View>
+    </>
   )
 }
 
@@ -56,7 +67,9 @@ export default Pago
 const styles = StyleSheet.create({
   Background: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    padding: 20,
   },
   elipse: {
     position: 'absolute',
@@ -74,14 +87,24 @@ const styles = StyleSheet.create({
     paddingVertical: 17,
     marginTop: 16,
   },
-  txtItem: {
-    fontSize: 18,
-    fontFamily: fonts.extraBold,
-    color: '#ffffff',
-    flex: 1,
-  },
+
   container: {
     flex: 1,
     padding: 20,
   }
 })
+
+const Text = styled.Text`
+  text-align: center;
+  font-family: ${fonts.extraBold};
+  font-size: 25px;
+  color: #ffffff;
+`;
+
+const Text2 = styled.Text`
+  margin-top: 20px;
+  text-align: center;
+  font-family: ${fonts.medium};
+  font-size: 20px;
+  color: #ffffff;
+`;

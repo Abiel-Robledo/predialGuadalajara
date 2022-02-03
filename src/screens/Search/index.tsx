@@ -62,37 +62,37 @@ const SearchScreen: React.FC = () => {
         title: 'Alerta',
         message: 'Debe completar todos los campos',
       });
-    }
+    } else {
+      setLoading(true);
 
-    setLoading(true);
+      const response = await consultaAdedudo(
+        recaudadora,
+        tipo,
+        cuenta,
+        correo,
+        errorHandler,
+      );
 
-    const response = await consultaAdedudo(
-      recaudadora,
-      tipo,
-      cuenta,
-      correo,
-      errorHandler,
-    );
+      if (response && response.Estatus === "0") {
+        setPredio(response);
 
-    if (response && response.Estatus === "0") {
-      setPredio(response);
+        notify({
+          type: 'success',
+          title: 'Éxito',
+          message: 'Consulta exitosa.',
+        });
 
-      notify({
-        type: 'success',
-        title: 'Éxito',
-        message: 'Consulta exitosa.',
-      });
+        navigation.push('home');
+      } else if (response && response.Estatus !== "0") {
 
-      navigation.push('home');
-    } else if (response && response.Estatus !== "0") {
+        notify({
+          type: 'info',
+          title: 'Sin adeudos',
+          message: response.EstatusMensaje,
+        })
 
-      notify({
-        type: 'info',
-        title: 'Sin adeudos',
-        message: response.EstatusMensaje,
-      })
-
-      setLoading(false);
+        setLoading(false);
+      }
     }
   };
 
@@ -106,12 +106,7 @@ const SearchScreen: React.FC = () => {
         keyboardShouldPersistTaps="always"
       >
         <Container>
-          <Header
-            title={'Consulta y pago\ndel\nimpuesto predial'}
-            titleStyle={{
-              textAlign: 'center',
-            }}
-          />
+          <Header />
 
           <Title />
 

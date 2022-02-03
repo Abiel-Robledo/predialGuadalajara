@@ -33,9 +33,9 @@ const Header: React.FC<HeaderProps> = ({
         }}
       >
         <Image source={IMAGENLOGO} style={{
-          width: 100,
-          height: 50,
-          resizeMode: 'center',
+          width: 158,
+          height: 80,
+          resizeMode: 'cover',
           marginTop: 0,
           marginEnd: 0,
         }} />

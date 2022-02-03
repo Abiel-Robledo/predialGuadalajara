@@ -39,11 +39,15 @@ const HomeScreen = () => {
   // Methods
   const notSupportedYet = () => {
     notify({
-      type: 'info',
-      title: '¡No implementado!',
-      message: 'Esta función aún no está disponible.',
+      type: 'warn',
+      title: '¡EN MANTENIMIENTO!',
+      message: 'Esta función se encuentra en mantenimiento',
     });
   };
+
+  const navegateToPago = () => {
+    navigation.navigate('pago');
+  }
 
   const openImprimirPago = () => {
     Linking.openURL(predio?.url_orden_pago);
@@ -129,7 +133,7 @@ const HomeScreen = () => {
                 index,
               ) => (
                   <TouchableWithoutFeedback
-                    onPress={() => (navigation.navigate('pago'))}
+                    onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
                   >
                     <View style={styles.menuItem}>
                       <Text style={styles.menuItemPago}>

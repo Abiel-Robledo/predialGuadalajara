@@ -5,15 +5,11 @@ import fonts from '../../../utils/fonts';
 const Title: React.FC = () => (
   <Container>
     <Text>
-      Consulta y pago
+      CONSULTA Y PAGO
     </Text>
 
     <Text>
-      del
-    </Text>
-
-    <Text>
-      impuesto predial
+      DEL IMPUESTO PREDIAL
     </Text>
   </Container>
 );
