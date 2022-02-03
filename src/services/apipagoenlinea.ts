@@ -19,7 +19,7 @@ const consultaAdedudo = async (
     body.append('correo', correo || '');
 
     const response = await axios.post<ConsultaAdedudoResponse>(
-      `${BASE_URL}consulta_adeudo_app`,
+      `${BASE_URL_PROD}consulta_adeudo_app`,
       body,
       {
         headers: {
