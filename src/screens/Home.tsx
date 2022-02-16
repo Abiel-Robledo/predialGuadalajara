@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import IMAGEBACKGROUND from '../../assets/images/Ellipse.png';
 
@@ -67,113 +68,125 @@ const HomeScreen = () => {
   ];
 
   return (
-    <View style={styles.background}>
 
-      <ScrollView
-        contentContainerStyle={styles.container}
-        bounces={false}
-      >
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+      }}
+      bounces={false}
+      keyboardShouldPersistTaps="always"
+    >
 
-        <Title />
+      <View style={styles.background}>
 
-        <View style={styles.content}>
-          <View style={styles.menu}>
-            <TouchableWithoutFeedback
-              onPress={() => navigation.navigate('details')}
-            >
-              <View style={styles.menuItem}>
-                <Text style={styles.txtItem}>Verificar Datos</Text>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          bounces={false}
+        >
 
-                <Icon
-                  name="ios-caret-forward-outline"
-                  size={20}
-                  color={colors.secundary}
-                />
-              </View>
-            </TouchableWithoutFeedback>
+          <Title />
 
-            <TouchableWithoutFeedback
-              onPress={() => (navigation.navigate('detalleDePago'))}
-            >
-              <View style={styles.menuItem}>
-                <Text style={styles.txtItem}>Consulta de adeudos</Text>
+          <View style={styles.content}>
+            <View style={styles.menu}>
+              <TouchableWithoutFeedback
+                onPress={() => navigation.navigate('details')}
+              >
+                <View style={styles.menuItem}>
+                  <Text style={styles.txtItem}>Verificar Datos</Text>
 
-                <Icon
-                  name="ios-caret-forward-outline"
-                  size={20}
-                  color={colors.secundary}
-                />
-              </View>
-            </TouchableWithoutFeedback>
+                  <Icon
+                    name="ios-caret-forward-outline"
+                    size={20}
+                    color={colors.secundary}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback
-              onPress={() => (navigation.navigate('imprimirPago'))}
-            >
-              <View style={styles.menuItem}>
-                <Text style={styles.txtItem}>
-                  Imprimir Orden de Pago
+              <TouchableWithoutFeedback
+                onPress={() => (navigation.navigate('detalleDePago'))}
+              >
+                <View style={styles.menuItem}>
+                  <Text style={styles.txtItem}>Consulta de adeudos</Text>
+
+                  <Icon
+                    name="ios-caret-forward-outline"
+                    size={20}
+                    color={colors.secundary}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+
+              <TouchableWithoutFeedback
+                onPress={() => (navigation.navigate('imprimirPago'))}
+              >
+                <View style={styles.menuItem}>
+                  <Text style={styles.txtItem}>
+                    Imprimir Orden de Pago
                  </Text>
 
-                <Icon
-                  name="ios-caret-forward-outline"
-                  size={20}
-                  color={colors.secundary}
-                />
-              </View>
-            </TouchableWithoutFeedback>
+                  <Icon
+                    name="ios-caret-forward-outline"
+                    size={20}
+                    color={colors.secundary}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
 
-            {
-              PROPERTIES.map((
+              {
+                PROPERTIES.map((
 
-                {
-                  fieldName,
-                  propertie,
-                  render = (val) => val || '$0.00',
-                },
-                index,
-              ) => (
-                  <TouchableWithoutFeedback
-                    onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
-                  >
-                    <View style={styles.menuItem}>
-                      <Text style={styles.menuItemPago}>
-                        Pagar {render(predio?.ecommerce?.amount || "0") as string}
-                      </Text>
+                  {
+                    fieldName,
+                    propertie,
+                    render = (val) => val || '$0.00',
+                  },
+                  index,
+                ) => (
+                    <TouchableWithoutFeedback
+                      onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
+                    >
+                      <View style={styles.menuItem}>
+                        <Text style={styles.menuItemPago}>
+                          Pagar {render(predio?.ecommerce?.amount || "0") as string}
+                        </Text>
 
-                      <Icon
-                        name="ios-caret-forward-outline"
-                        size={20}
-                        color={colors.secundary}
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
+                        <Icon
+                          name="ios-caret-forward-outline"
+                          size={20}
+                          color={colors.secundary}
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
 
-                ))
-            }
+                  ))
+              }
 
-            <Button
-              onPress={() => navigation.reset({
-                index: 0,
-                routes: [{ name: 'search' }],
-              })}
-            >
-              Consultar otra cuenta
+              <Button
+                onPress={() => navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'search' }],
+                })}
+              >
+                Consultar otra cuenta
             </Button>
 
-            <Footer />
+              <Footer />
 
-            <Header
-              title={'Consulta y pago\ndel\nimpuesto predial'}
-              titleStyle={{
-                textAlign: 'center',
-              }}
-            />
+              <Header
+                title={'Consulta y pago\ndel\nimpuesto predial'}
+                titleStyle={{
+                  textAlign: 'center',
+                }}
+              />
 
 
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View >
+        </ScrollView>
+      </View >
+
+    </KeyboardAwareScrollView>
+
   );
 };
 
