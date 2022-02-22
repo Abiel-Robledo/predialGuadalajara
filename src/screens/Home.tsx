@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,7 @@ import {
   Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -19,7 +19,7 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import fonts from '../utils/fonts';
 import Footer from '../components/Footer';
-import Title from '../screens/Search/components/Title';
+import { consultaBancos } from '../services/apipagoenlinea';
 
 import { RootStackParamList } from '../types/navigation';
 import { useDropdownAlert } from '../utils/notifications';
@@ -37,6 +37,11 @@ const HomeScreen = () => {
   const { notify } = useDropdownAlert();
   const [predio] = usePredio();
 
+  const [recaudadora, setRecaudadora] = useState<string>('');
+  const [tipo, setTipo] = useState<string>('');
+  const [cuenta, setCuenta] = useState<string>('');
+  const [correo, setCorreo] = useState<string>('');
+
   // Methods
   const notSupportedYet = () => {
     notify({
@@ -46,9 +51,23 @@ const HomeScreen = () => {
     });
   };
 
+  // const navegateToPago = () => {
+  //   navigation.dispatch(CommonActions.reset({
+  //     index: 1,
+  //     routes: [
+  //       {
+  //         name: 'search',
+  //       },
+  //       {
+  //         name: 'pago',
+  //       }
+  //     ]
+  //   }));
+  // };
+
   const navegateToPago = () => {
-    navigation.navigate('pago');
-  }
+    navigation.navigate('pago')
+  };
 
   const openImprimirPago = () => {
     Linking.openURL(predio?.url_orden_pago);
@@ -57,6 +76,38 @@ const HomeScreen = () => {
   const openPagoConTarjeta = () => {
     // Linking.openURL("https://u.mitec.com.mx/p/i/5Z4BF060");
     Linking.openURL(predio?.mit.url_movil_app);
+  };
+
+  const onSubmit = async () => {
+    const response = await consultaBancos(
+      '174',
+      predio?.bbva.s_transm,
+      predio?.bbva.r_bancaria,
+      predio?.bbva.t_importe,
+      predio?.icebl,
+    );
+
+    if (predio?.mit?.url_movil_app === undefined) {
+      notSupportedYet();
+    } else {
+      if (response.status) {
+        notify({
+          type: 'success',
+          title: 'EXITOSO',
+          message: response.message,
+        });
+      } else {
+        notify({
+          type: 'warn',
+          title: 'AVISO!',
+          message: response?.message || 'Hubo un error',
+        });
+      }
+
+      navegateToPago();
+    };
+
+    console.log(response);
   };
 
   const PROPERTIES: Prop[] = [
@@ -83,8 +134,6 @@ const HomeScreen = () => {
           contentContainerStyle={styles.container}
           bounces={false}
         >
-
-          <Title />
 
           <View style={styles.content}>
             <View style={styles.menu}>
@@ -143,7 +192,8 @@ const HomeScreen = () => {
                   index,
                 ) => (
                     <TouchableWithoutFeedback
-                      onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
+                      // onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
+                      onPress={onSubmit}
                     >
                       <View style={styles.menuItem}>
                         <Text style={styles.menuItemPago}>

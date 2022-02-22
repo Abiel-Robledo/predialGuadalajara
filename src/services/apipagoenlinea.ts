@@ -4,6 +4,9 @@ import { ApiError, ConsultaAdedudoResponse, PredioProps } from '../types/api';
 const BASE_URL = 'https://apipagoenlinea.guadalajara.gob.mx/predialApiTest/';
 const BASE_URL_PROD = 'https://apipagoenlinea.guadalajara.gob.mx/predialApi/';
 
+const BANCO_URL_PRUB = 'https://apipagoenlinea.guadalajara.gob.mx/predialApiTest/';
+const BANCO_URL = 'https://apipagoenlinea.guadalajara.gob.mx/predialApi/';
+
 const consultaAdedudo = async (
   recaudadora: string,
   tipo: string,
@@ -19,7 +22,7 @@ const consultaAdedudo = async (
     body.append('correo', correo || '');
 
     const response = await axios.post<ConsultaAdedudoResponse>(
-      `${BASE_URL_PROD}consulta_adeudo_app`,
+      `${BASE_URL}consulta_adeudo_app`,
       body,
       {
         headers: {
@@ -44,6 +47,49 @@ const consultaAdedudo = async (
   return null;
 };
 
+const consultaBancos = async (
+  origen: string,
+  transm?: string,
+  captura?: string,
+  importe?: string,
+  consultaBancos?: string,
+  onError?: (error: ApiError) => void,
+) => {
+  try {
+    const body = new URLSearchParams();
+    body.append('s_transm', transm || '');
+    body.append('lineaCaptura', captura || '');
+    body.append('importe', importe || '');
+    body.append('idConsultaEnvioBancoLog', consultaBancos || '');
+    body.append('origen', origen);
+
+    const response = await axios.post(
+      `${BANCO_URL}guardar_envio_bancos`,
+      body,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+    if (response.data.status && response.data) {
+      return response.data;
+    }
+
+    if (response.data.message) {
+      onError?.({
+        message: response.data.message,
+      });
+    }
+  } catch (error) {
+    onError?.(error as ApiError);
+  }
+
+  return null;
+};
+
+
 export {
   consultaAdedudo,
+  consultaBancos,
 };

@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   StyleSheet,
   View,
-  TouchableWithoutFeedback,
-  Image,
-  Linking,
+  Alert,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { WebView } from 'react-native-webview';
 import styled from 'styled-components/native';
+
+import RNFS from 'react-native-fs';
+import FileViewer from 'react-native-file-viewer';
 
 
 import fonts from '../utils/fonts';
@@ -26,12 +27,62 @@ const Pago = () => {
   const [predio] = usePredio();
   const navigation = useNavigation<DetailsScreenNavigationProp>();
 
-  const openPagoConTarjeta = () => {
-    // Linking.openURL("https://u.mitec.com.mx/p/i/5Z4BF060");
-    Linking.openURL(predio?.mit.url_movil_app);
+  const webview = useRef();
+
+  const SET_WEBVIEW_FLAG = `
+    if (fromWebView === undefined) {
+      var fromWebView = true;
+    } else {
+      fromWebView = true;
+    }
+`;
+
+  const HACK_ZOOM_IN = `
+    setTimeout(()=>{
+      fromWebView = true;
+      const meta = document.createElement('meta');
+      meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
+        meta.setAttribute('name', 'viewport');
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        let els = document.querySelectorAll('input');
+        els.forEach(el => el.style='font-size:16px');
+      },200);
+`;
+
+  const updateInjectedJs = () => {
+    if (webview.current) {
+      webview.current.injectJavaScript(HACK_ZOOM_IN);
+    }
   };
-  const openImprimirPago = () => {
-    Linking.openURL(predio?.url_orden_pago);
+
+  const interceptRequest = async (res) => {
+    if (/data/g.test(res?.url_orden_pago)) {
+      Alert.alert(
+        'Estado de cuenta',
+        '¿Desea descargar el PDF?',
+        [
+          {
+            text: 'No',
+            onPress: () => { },
+            style: 'cancel',
+          },
+          {
+            text: 'Sí',
+            onPress: () => savePDF(res?.url_orden_pago),
+          },
+        ],
+        { cancelable: false },
+      );
+    }
+  };
+
+  const savePDF = async (uri) => {
+    try {
+      await RNFS.writeFile(uri?.url_orden_pago, 'base64');
+      await FileViewer.open(uri?.url_orden_pago);
+    } catch {
+      // Do something
+    }
   };
 
   return (
@@ -53,8 +104,21 @@ const Pago = () => {
        </Text2>
         <View>
           <WebView
-            source={{ uri: predio?.url_orden_pago }}
-            style={{}}
+            ref={webview}
+            source={{
+              uri: predio?.url_orden_pago,
+            }}
+            useWebkit
+            originWhitelist={['*']}
+            scalesPageToFit
+            style={styles.content}
+            javaScriptEnabled
+            mixedContentMode="compatibility"
+            injectedJavaScript={HACK_ZOOM_IN}
+            injectedJavaScriptBeforeContentLoaded={SET_WEBVIEW_FLAG}
+            onLoad={() => updateInjectedJs()}
+            onMessage={() => { }}
+            onShouldStartLoadWithRequest={(predio) => interceptRequest(predio)}
           />
         </View>
       </View>
@@ -87,7 +151,9 @@ const styles = StyleSheet.create({
     paddingVertical: 17,
     marginTop: 16,
   },
-
+  content: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 20,

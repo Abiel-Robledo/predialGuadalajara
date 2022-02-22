@@ -32,10 +32,10 @@ const Pago = () => {
     Linking.openURL(predio?.url_orden_pago);
   };
 
+  console.log(predio)
+
   return (
     <View style={styles.Background}>
-      {console.log(predio?.mit?.url_movil_app)}
-
       <Header
         onPress={() => navigation.reset({
           index: 0,
