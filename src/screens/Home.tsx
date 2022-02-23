@@ -3,10 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableWithoutFeedback,
   ScrollView,
   Linking,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -69,13 +69,13 @@ const HomeScreen = () => {
     navigation.navigate('pago')
   };
 
-  const openImprimirPago = () => {
-    Linking.openURL(predio?.url_orden_pago);
-  };
-
-  const openPagoConTarjeta = () => {
-    // Linking.openURL("https://u.mitec.com.mx/p/i/5Z4BF060");
-    Linking.openURL(predio?.mit.url_movil_app);
+  const navegateToImprimirPago = () => {
+    if (Platform.OS === 'ios') {
+      navigation.navigate('imprimirPagoIOS')
+    }
+    if (Platform.OS === 'android') {
+      navigation.navigate('imprimirPago')
+    }
   };
 
   const onSubmit = async () => {
@@ -103,11 +103,8 @@ const HomeScreen = () => {
           message: response?.message || 'Hubo un error',
         });
       }
-
       navegateToPago();
     };
-
-    console.log(response);
   };
 
   const PROPERTIES: Prop[] = [
@@ -166,7 +163,7 @@ const HomeScreen = () => {
               </TouchableWithoutFeedback>
 
               <TouchableWithoutFeedback
-                onPress={() => (navigation.navigate('imprimirPago'))}
+                onPress={() => (navegateToImprimirPago())}
               >
                 <View style={styles.menuItem}>
                   <Text style={styles.txtItem}>
