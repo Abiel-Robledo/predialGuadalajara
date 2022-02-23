@@ -22,6 +22,7 @@ import HomeScreen from './src/screens/Home';
 import PagoHome from './src/screens/Pago';
 import DetailsScreen from './src/screens/Details';
 import ImprimirPagoScreen from './src/screens/ImprimirPago';
+import ImprimirPagoIosScreen from './src/screens/ImprimirPagoIOS';
 
 // Configuration
 const theme: Theme = {
@@ -87,6 +88,7 @@ const AppContainer = () => {
               <Stack.Screen name="home" component={HomeScreen} />
               <Stack.Screen name="pago" component={PagoHome} />
               <Stack.Screen name="imprimirPago" component={ImprimirPagoScreen} />
+              <Stack.Screen name="imprimirPagoIOS" component={ImprimirPagoIosScreen} />
               <Stack.Screen name="detalleDePago" component={DetalleDePago} />
               <Stack.Screen name="details" component={DetailsScreen} />
             </Stack.Navigator>

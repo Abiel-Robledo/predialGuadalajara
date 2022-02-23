@@ -33,17 +33,9 @@ const Pago = () => {
           routes: [{ name: 'search' }],
         })}
       />
-
-      <View style={styles.msgContainer}>
-        <Text style={styles.txtItem}>Descargando archivo</Text>
-        <Text style={styles.txtItem2}>espere un momento...</Text>
-      </View>
-
-      <View>
-        <WebView
-          source={{ uri: predio?.url_orden_pago }}
-        />
-      </View>
+      <WebView
+        source={{ uri: predio?.url_orden_pago }}
+      />
     </View>
   )
 }
