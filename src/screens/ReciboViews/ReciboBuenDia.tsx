@@ -21,7 +21,7 @@ import colors from '../../utils/colors';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'imprimirPago'>;
 
-const Pago = () => {
+const Pago = ({ route: { params } }) => {
   const [predio] = usePredio();
   const navigation = useNavigation<DetailsScreenNavigationProp>();
 
@@ -38,7 +38,7 @@ const Pago = () => {
 
       <View>
         <WebView
-          source={{ uri: predio?.pago?.recibo_salvo_buen_cobro }}
+          source={{ uri: params?.item?.recibo_salvo_buen_cobro }}
         />
       </View>
     </View>

@@ -21,7 +21,7 @@ import fonts from '../../utils/fonts';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'imprimirPago'>;
 
-const Pago = () => {
+const Pago = ({ route: { params } }) => {
   const [predio] = usePredio();
   const navigation = useNavigation<DetailsScreenNavigationProp>();
 
@@ -31,7 +31,7 @@ const Pago = () => {
         onPress={() => navigation.goBack()}
       />
       <WebView
-        source={{ uri: predio?.pago?.pdf_recibo }}
+        source={{ uri: params?.item?.pdf_recibo }}
       />
     </View>
   )
