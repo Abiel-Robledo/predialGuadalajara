@@ -5,6 +5,7 @@ type RootStackParamList = {
   pago: undefined;
   imprimirPago: undefined;
   detalleDePago: undefined;
+  ImprimirRecibo: undefined;
 };
 
 export type {

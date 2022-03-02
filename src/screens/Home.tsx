@@ -51,19 +51,6 @@ const HomeScreen = () => {
     });
   };
 
-  // const navegateToPago = () => {
-  //   navigation.dispatch(CommonActions.reset({
-  //     index: 1,
-  //     routes: [
-  //       {
-  //         name: 'search',
-  //       },
-  //       {
-  //         name: 'pago',
-  //       }
-  //     ]
-  //   }));
-  // };
 
   const navegateToPago = () => {
     navigation.navigate('pago')
@@ -115,6 +102,76 @@ const HomeScreen = () => {
     },
   ];
 
+  const mostrarRecibo = () => {
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => (navigation.navigate('imprimirRecibo'))}
+      >
+        <View style={styles.menuItem}>
+          <Text style={styles.txtItem}>
+            Imprimir Recibo
+       </Text>
+
+          <Icon
+            name="ios-caret-forward-outline"
+            size={20}
+            color={colors.secundary}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  };
+
+  const mostrarPagos = () => {
+    return (
+      <>
+        <TouchableWithoutFeedback
+          onPress={() => (navegateToImprimirPago())}
+        >
+          <View style={styles.menuItem}>
+            <Text style={styles.txtItem}>
+              Imprimir Orden de Pago
+       </Text>
+            <Icon
+              name="ios-caret-forward-outline"
+              size={20}
+              color={colors.secundary}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        {
+          PROPERTIES.map((
+
+            {
+              fieldName,
+              propertie,
+              render = (val) => val || '$0.00',
+            },
+            index,
+          ) => (
+              <TouchableWithoutFeedback
+                onPress={onSubmit}
+              >
+                <View style={styles.menuItem}>
+                  <Text style={styles.menuItemPago}>
+                    Pagar {render(predio?.ecommerce?.amount || "0") as string}
+                  </Text>
+
+                  <Icon
+                    name="ios-caret-forward-outline"
+                    size={20}
+                    color={colors.secundary}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+
+            ))
+        }
+
+      </>
+    );
+  };
+
   return (
 
     <KeyboardAwareScrollView
@@ -161,52 +218,7 @@ const HomeScreen = () => {
                   />
                 </View>
               </TouchableWithoutFeedback>
-
-              <TouchableWithoutFeedback
-                onPress={() => (navegateToImprimirPago())}
-              >
-                <View style={styles.menuItem}>
-                  <Text style={styles.txtItem}>
-                    Imprimir Orden de Pago
-                 </Text>
-
-                  <Icon
-                    name="ios-caret-forward-outline"
-                    size={20}
-                    color={colors.secundary}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-
-              {
-                PROPERTIES.map((
-
-                  {
-                    fieldName,
-                    propertie,
-                    render = (val) => val || '$0.00',
-                  },
-                  index,
-                ) => (
-                    <TouchableWithoutFeedback
-                      // onPress={predio?.mit?.url_movil_app === undefined ? notSupportedYet : navegateToPago}
-                      onPress={onSubmit}
-                    >
-                      <View style={styles.menuItem}>
-                        <Text style={styles.menuItemPago}>
-                          Pagar {render(predio?.ecommerce?.amount || "0") as string}
-                        </Text>
-
-                        <Icon
-                          name="ios-caret-forward-outline"
-                          size={20}
-                          color={colors.secundary}
-                        />
-                      </View>
-                    </TouchableWithoutFeedback>
-
-                  ))
-              }
+              {predio?.mit === null ? mostrarRecibo() : mostrarPagos()}
 
               <Button
                 onPress={() => navigation.reset({
@@ -225,8 +237,6 @@ const HomeScreen = () => {
                   textAlign: 'center',
                 }}
               />
-
-
             </View>
           </View>
         </ScrollView>
