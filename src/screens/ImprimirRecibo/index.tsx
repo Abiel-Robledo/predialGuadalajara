@@ -10,19 +10,18 @@ import { RootStackParamList } from '../../types/navigation';
 import Header from '../Details/components/Header';
 import colors from '../../utils/colors';
 import Title from './components/Title';
-import Footer from './components/Footer';
-import ButtonDown from './components/ButtonDown';
+import ButtonList from './components/ButtonList';
 
 import fonts from '../../utils/fonts';
 import { usePredio } from '../../utils/predio';
 import { PredioProps } from '../../types/api';
 import { numberFormat } from '../../utils/numbers';
 
-
-type datalledePagoNavigationProp = NativeStackNavigationProp<RootStackParamList, 'detalleDePago'>;
+const pago = [1, 2, 3, 4]
+type ImprimirReciboNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ImprimirRecibo'>;
 
 const DetallesDePago = () => {
-  const navigation = useNavigation<datalledePagoNavigationProp>();
+  const navigation = useNavigation<ImprimirReciboNavigationProp>();
 
   const [predio] = usePredio();
 
@@ -38,17 +37,14 @@ const DetallesDePago = () => {
         contentContainerStyle={styles.container}
         bounces={false}
       >
-
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={predio?.adeudos.filter((x) => !['TOTAL', 'DESCTORECG', 'DESCTOIMPU', 'TOTDESCTO', 'TOTAPAGAR'].includes(x.IDENTIFICADOR))}
+          data={predio?.pagos}
           renderItem={({ item }) => (
-            <ButtonDown item={item} />
+            <ButtonList item={item} />
           )}
         />
       </ScrollView>
-
-      <Footer />
 
     </View>
   )

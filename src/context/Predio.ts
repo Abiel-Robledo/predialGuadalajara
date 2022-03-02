@@ -8,7 +8,7 @@ type PredioContextProps = {
 
 const PredioContext = React.createContext<PredioContextProps>({
   predio: null,
-  setPredio: () => {},
+  setPredio: () => { },
 });
 
 export default PredioContext;

@@ -7,7 +7,6 @@ type PredioSetter = (pred: PredioProps | null) => void;
 
 const usePredio = (): [(PredioProps | null), PredioSetter] => {
   const { predio, setPredio } = useContext(PredioContext);
-
   return [predio, setPredio];
 };
 

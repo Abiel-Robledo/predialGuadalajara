@@ -23,6 +23,17 @@ import PagoHome from './src/screens/Pago';
 import DetailsScreen from './src/screens/Details';
 import ImprimirPagoScreen from './src/screens/ImprimirPago';
 import ImprimirPagoIosScreen from './src/screens/ImprimirPagoIOS';
+import ImprimirRecibo from './src/screens/ImprimirRecibo';
+
+import ReciboPdfIOS from './src/screens/ReciboViews/ReciboIOS';
+import ReciboPdf from './src/screens/ReciboViews/Recibo';
+
+import ReciboBuenCobro from './src/screens/ReciboViews/ReciboBuenDia';
+import ReciboBuenCobroIOS from './src/screens/ReciboViews/RecuboBuenCobroIOS';
+
+
+
+
 
 // Configuration
 const theme: Theme = {
@@ -67,7 +78,6 @@ const AppContainer = () => {
     setPredio,
     predio,
   }), [predio]);
-
   return (
     <>
       <DropdownalertContext.Provider
@@ -89,6 +99,11 @@ const AppContainer = () => {
               <Stack.Screen name="pago" component={PagoHome} />
               <Stack.Screen name="imprimirPago" component={ImprimirPagoScreen} />
               <Stack.Screen name="imprimirPagoIOS" component={ImprimirPagoIosScreen} />
+              <Stack.Screen name="imprimirRecibo" component={ImprimirRecibo} />
+              <Stack.Screen name="reciboPDFIOS" component={ReciboPdfIOS} />
+              <Stack.Screen name="reciboPDF" component={ReciboPdf} />
+              <Stack.Screen name="reciboBuenCobro" component={ReciboBuenCobro} />
+              <Stack.Screen name="reciboBuenCobroIOS" component={ReciboBuenCobroIOS} />
               <Stack.Screen name="detalleDePago" component={DetalleDePago} />
               <Stack.Screen name="details" component={DetailsScreen} />
             </Stack.Navigator>

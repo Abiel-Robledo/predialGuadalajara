@@ -52,7 +52,6 @@ const ButtonDown: React.FC<ButtonDownProps> = ({ item }) => {
       }
 
       {
-
         visible && PROPERTIES.map((
           {
             render = (val) => val || '$0.00',
@@ -95,7 +94,6 @@ const ButtonDown: React.FC<ButtonDownProps> = ({ item }) => {
               </View>
 
               <View style={styles.line} />
-
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.text}>Total:</Text>
                 <Text style={styles.textData}>{render(item?.TOTAL || "0") as string}</Text>

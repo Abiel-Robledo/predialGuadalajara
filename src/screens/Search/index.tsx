@@ -84,12 +84,14 @@ const SearchScreen: React.FC = () => {
 
         navigation.push('home');
       } else if (response && response.Estatus !== "0") {
+        setPredio(response);
 
         notify({
           type: 'info',
           title: 'Sin adeudos',
           message: response.EstatusMensaje,
         })
+        navigation.push('home');
 
         setLoading(false);
       }
