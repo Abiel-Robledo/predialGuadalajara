@@ -15,19 +15,19 @@ const ButtonList = ({ item }) => {
 
   const navegateToImprimirRecibo = () => {
     if (Platform.OS === 'ios') {
-      navigation.navigate('reciboPDFIOS')
+      navigation.navigate('reciboPDFIOS', { item })
     }
     if (Platform.OS === 'android') {
-      navigation.navigate('reciboPDF')
+      navigation.navigate('reciboPDF', { item })
     }
   };
 
   const navegateToImprimirReciboSalvoBuenDia = () => {
     if (Platform.OS === 'ios') {
-      navigation.navigate('reciboBuenCobroIOS')
+      navigation.navigate('reciboBuenCobroIOS', { item })
     }
     if (Platform.OS === 'android') {
-      navigation.navigate('reciboBuenCobro')
+      navigation.navigate('reciboBuenCobro', { item })
     }
   };
 
@@ -83,6 +83,7 @@ const ButtonList = ({ item }) => {
             <View style={styles.list}>
               <TouchableWithoutFeedback
                 onPress={() => navegateToImprimirRecibo()}
+                disabled={item?.pdf_recibo === null && true}
               >
                 <View style={styles.menuItemDown}>
                   <View style={styles.infoButton}>
@@ -91,19 +92,22 @@ const ButtonList = ({ item }) => {
                     </Text>
                   </View>
 
-                  <Icon
-                    name="ios-caret-forward-outline"
-                    size={24}
-                    color={colors.secundary}
-                    style={{
-                      marginRight: 10,
-                    }}
-                  />
+                  {item?.pdf_recibo !== null && (
+                    <Icon
+                      name="ios-caret-forward-outline"
+                      size={24}
+                      color={colors.secundary}
+                      style={{
+                        marginRight: 10,
+                      }}
+                    />
+                  )}
                 </View>
               </TouchableWithoutFeedback>
 
               <TouchableWithoutFeedback
                 onPress={() => navegateToImprimirReciboSalvoBuenDia()}
+                disabled={item?.recibo_salvo_buen_cobro === null && true}
               >
                 <View style={styles.menuItemDown}>
                   <View style={styles.infoButton}>
@@ -112,14 +116,16 @@ const ButtonList = ({ item }) => {
                     </Text>
                   </View>
 
-                  <Icon
-                    name="ios-caret-forward-outline"
-                    size={24}
-                    color={colors.secundary}
-                    style={{
-                      marginRight: 10,
-                    }}
-                  />
+                  {item?.recibo_salvo_buen_cobro !== null && (
+                    <Icon
+                      name="ios-caret-forward-outline"
+                      size={24}
+                      color={colors.secundary}
+                      style={{
+                        marginRight: 10,
+                      }}
+                    />
+                  )}
                 </View>
               </TouchableWithoutFeedback>
             </View>
