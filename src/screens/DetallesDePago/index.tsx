@@ -38,7 +38,6 @@ const DetallesDePago = () => {
         contentContainerStyle={styles.container}
         bounces={false}
       >
-
         <FlatList
           showsVerticalScrollIndicator={false}
           data={predio?.adeudos.filter((x) => !['TOTAL', 'DESCTORECG', 'DESCTOIMPU', 'TOTDESCTO', 'TOTAPAGAR'].includes(x.IDENTIFICADOR))}

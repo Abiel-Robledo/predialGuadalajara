@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, ProgressBarAndroidBase } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -33,18 +33,15 @@ const DetallesDePago = () => {
 
       <Title />
 
-      <ScrollView
-        contentContainerStyle={styles.container}
-        bounces={false}
-      >
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={predio?.pagos}
-          renderItem={({ item }) => (
-            <ButtonList item={item} />
-          )}
-        />
-      </ScrollView>
+      <FlatList
+        keyExtractor={predio?.pagos?.id_pago}
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        data={predio?.pagos}
+        renderItem={({ item }) => (
+          <ButtonList item={item} />
+        )}
+      />
 
     </View>
   )

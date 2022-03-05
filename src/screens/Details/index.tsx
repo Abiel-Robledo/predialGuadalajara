@@ -25,28 +25,44 @@ type Prop = {
 
 const PROPERTIES: Prop[] = [
   {
-    fieldName: 'Recaudadora',
-    propertie: 'Recaudadora',
-  },
-  {
     fieldName: 'Tipo',
     propertie: 'Tipo',
+  },
+  {
+    fieldName: 'Cuenta',
+    propertie: 'Cuenta',
   },
   {
     fieldName: 'Clave Catastral',
     propertie: 'ClaveCatastral',
   },
   {
+    fieldName: 'ID Cuenta',
+    propertie: 'IdCuenta',
+  },
+  {
     fieldName: 'Calle',
     propertie: 'Calle',
+  },
+  {
+    fieldName: 'No. Interior',
+    propertie: 'NoInterior',
   },
   {
     fieldName: 'No. Exterior',
     propertie: 'NoExterior',
   },
   {
+    fieldName: 'Colonia',
+    propertie: 'Colonia',
+  },
+  {
     fieldName: 'Mts. Terreno',
     propertie: 'MtsTerreno',
+  },
+  {
+    fieldName: 'Mts. Construcción',
+    propertie: 'MtsConstruccion',
   },
   {
     fieldName: 'Valor Terreno',
@@ -54,29 +70,13 @@ const PROPERTIES: Prop[] = [
     render: (val) => numberFormat(val as string),
   },
   {
-    fieldName: 'Valor Catastral',
-    propertie: 'ValorCatastral',
+    fieldName: 'Valor Construcción',
+    propertie: 'ValorConstruccion',
     render: (val) => numberFormat(val as string),
   },
   {
-    fieldName: 'ID Cuenta',
-    propertie: 'IdCuenta',
-  },
-  {
-    fieldName: 'Colonia',
-    propertie: 'Colonia',
-  },
-  {
-    fieldName: 'No. Interior',
-    propertie: 'NoInterior',
-  },
-  {
-    fieldName: 'Mts. Construcción',
-    propertie: 'MtsConstruccion',
-  },
-  {
-    fieldName: 'Valor Construcción',
-    propertie: 'ValorConstruccion',
+    fieldName: 'Valor Catastral',
+    propertie: 'ValorCatastral',
     render: (val) => numberFormat(val as string),
   },
 ];
@@ -113,8 +113,8 @@ const DetailsScreen: React.FC = () => {
         </Description>
 
         <ListItem
-          fieldName="Cuenta"
-          value={predio?.Cuenta}
+          fieldName="Recaudadora"
+          value={predio?.Recaudadora}
           style={{
             backgroundColor: colors.button,
             marginTop: 30,
